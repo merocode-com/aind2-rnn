@@ -4,6 +4,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
 import keras
+from functools import reduce
 
 
 # TODO: fill out the function below that transforms the input series 
@@ -36,6 +37,13 @@ def build_part1_RNN(window_size):
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
     punctuation = ['!', ',', '.', ':', ';', '?']
+
+    unique_chars = set(text)
+    allowed_chars = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                     '!', ',', '.', ':', ';', '?'}
+    chars_to_be_removed = unique_chars - allowed_chars
+
+    text = reduce((lambda x,y: x.replace(y, ' ')), chars_to_be_removed, text)
 
     return text
 
